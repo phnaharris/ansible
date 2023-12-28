@@ -1,0 +1,17 @@
+- name: Starting SSH agent
+  shell: eval `ssh-agent`
+
+- name: Ensuring .ssh directory exists.
+  file:
+    dest: "{{ lookup('env', 'HOME') }}/.ssh"
+    mode: 0700
+    state: directory
+
+- name: Installing SSH key
+  with_fileglob:
+    - "{{ lookup('pipe', 'pwd') }}/.ssh/*"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/"
+    owner: "{{ user.stdout }}"
+    mode: 0600
