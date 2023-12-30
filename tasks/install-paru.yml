@@ -1,0 +1,11 @@
+- name: Clonning paru
+  git:
+    repo: https://aur.archlinux.org/paru.git
+    dest: "/tmp/paru"
+    clone: yes
+    update: yes
+
+- name: Installing paru
+  ansible.builtin.shell:
+    cmd: makepkg -si --needed --noconfirm
+    chdir: "/tmp/paru"

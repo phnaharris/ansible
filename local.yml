@@ -19,3 +19,4 @@
       register: hostname
 
     - include_tasks: tasks/install-ssh.yml
+    - include_tasks: tasks/install-paru.yml
