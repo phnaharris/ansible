@@ -1,0 +1,38 @@
+- name: Make sure directory existed
+  file:
+    dest: "{{ repos }}"
+    mode: 0700
+    state: directory
+
+- name: Make sure orgs/user directory existed
+  file:
+    dest: "{{ repos }}/{{ item }}"
+    mode: 0700
+    state: directory
+  loop:
+    - phnaharris
+    - pmachos
+
+- name: Pulling repos
+  vars:
+    user:
+      - name: "phnaharris"
+        repos:
+          - phnaharris.github.io
+      - name: "pmachos"
+        repos:
+          - dotfiles
+          - ansible
+          - passwords
+          - scripts
+          - wireguard-vpns
+  git:
+    repo: "git@github.com:{{ item.0.name }}/{{ item.1 }}.git"
+    dest: "{{ repos }}/{{ item.0.name }}/{{ item.1 }}"
+    key_file: "{{ git_ssh }}"
+    accept_hostkey: yes
+    clone: yes
+    update: yes
+  loop: "{{ user|subelements('repos') }}"
+  loop_control:
+    label: "{{ item.0.name }}"

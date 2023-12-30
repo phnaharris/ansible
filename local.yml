@@ -2,6 +2,8 @@
   vars:
     home: "{{ lookup('env', 'HOME') }}"
     xdg_config: "{{ lookup('env', 'HOME') }}/.config"
+    repos: "/data/repos"
+    git_ssh: "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519_github_phnaharris"
   pre_tasks:
     - name: Run the equivalent of "pacman -Syu"
       become: true
@@ -19,4 +21,5 @@
       register: hostname
 
     - include_tasks: tasks/install-ssh.yml
+    - include_tasks: tasks/pull-repos.yml
     - include_tasks: tasks/install-paru.yml
