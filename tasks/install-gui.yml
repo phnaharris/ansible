@@ -1,0 +1,59 @@
+- name: Installing window manager
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - hyprland
+    - xdg-desktop-portal-hyprland
+
+- name: Installing GUI helpers
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - blueman
+    - bolt
+    - brightnessctl
+    - hyprpaper
+    - hyprpicker
+    - ly
+    - qt5-wayland
+    - qt6-wayland
+    - tlp-rdw
+
+- name: Installing GUI dev tools
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - altair
+    - postman-bin
+    - mongodb-compass
+    - pgadmin4
+    - sqlitebrowser
+    - virt-manager
+    - dnsmasq
+
+- name: Installing GUI applications
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - anydesk-bin
+    - brave
+    - dunst
+    - firefox-developer-edition
+    - gimp
+    - google-chrome
+    - grimblast-git
+    - nautilus
+    - nomacs
+    - obs-studio
+    - qbittorrent
+    - keybase-bin
+    - slack-desktop-wayland
+    - solaar
+    - swappy
+    - telegram-desktop
+    - virt-manager
+    - vlc
+    - vscodium
+    - waybar
+    - zathura
+    - zathura-pdf-mupdf
+
+- name: Set dark theme for GTK application
+  shell: |
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'

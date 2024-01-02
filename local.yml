@@ -3,6 +3,7 @@
     home: "{{ lookup('env', 'HOME') }}"
     xdg_config: "{{ lookup('env', 'HOME') }}/.config"
     repos: "/data/repos"
+    dotfiles: "/data/repos/pmachos/dotfiles"
     git_ssh: "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519_github_phnaharris"
   pre_tasks:
     - name: Run the equivalent of "pacman -Syu"
@@ -23,3 +24,8 @@
     - include_tasks: tasks/install-ssh.yml
     - include_tasks: tasks/pull-repos.yml
     - include_tasks: tasks/install-paru.yml
+    - include_tasks: tasks/install-hardware-driver.yml
+    - include_tasks: tasks/install-util-apps.yml
+    - include_tasks: tasks/install-server.yml
+    - include_tasks: tasks/install-latex.yml
+    - include_tasks: tasks/install-gui.yml

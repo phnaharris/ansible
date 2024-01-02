@@ -1,0 +1,10 @@
+- name: Installing Latex specific tools.
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - texlive-full
+    - latexindent
+
+- name: Installing missing modules for latexindent
+  shell: |
+    perl -MCPAN -e 'install "File::HomeDir"'
+    perl -MCPAN -e 'install "YAML::Tiny"'

@@ -1,0 +1,43 @@
+- name: Installing CLI utilities
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - croc
+    - cronie
+    - eza
+    - fzf
+    - git
+    - htop
+    - man-db
+    - neofetch
+    - openresolv
+    - pass
+    - pass-otp
+    - rclone
+    - tree
+    - ufw
+    - unzip
+    - wget
+    - wireguard-tools
+
+- name: Installing Wayland addons
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - archlinux-keyring
+    - fcitx5
+    - fcitx5-configtool
+    - fcitx5-gtk
+    - fcitx5-qt
+    - fcitx5-unikey
+    - network-manager-applet
+    - networkmanager
+    - noto-fonts
+    - otf-font-awesome
+    - swaylock
+    - swhkd-bin
+    - ttf-jetbrains-mono-nerd
+    - ttf-noto-nerd
+    - wf-recorder
+    - wl-clipboard
+    - wlr-randr
+    - wofi
+    - xfce-polkit

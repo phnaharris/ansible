@@ -1,0 +1,15 @@
+- name: Installing CPU microcode
+  shell: paru -S --noconfirm intel-ucode
+
+- name: Installing GPU driver
+  shell: paru -S --noconfirm nvidia
+
+- name: Installing base package
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - base
+    - base-devel
+    - linux
+    - linux-firmware
+    - linux-headers
+    - net-tools

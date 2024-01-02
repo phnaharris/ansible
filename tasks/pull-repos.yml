@@ -15,14 +15,13 @@
 
 - name: Pulling repos
   vars:
-    user:
+    gituser:
       - name: "phnaharris"
-        repos:
+        repositories:
           - phnaharris.github.io
       - name: "pmachos"
-        repos:
+        repositories:
           - dotfiles
-          - ansible
           - passwords
           - scripts
           - wireguard-vpns
@@ -33,6 +32,6 @@
     accept_hostkey: yes
     clone: yes
     update: yes
-  loop: "{{ user|subelements('repos') }}"
+  loop: "{{ gituser|subelements('repositories') }}"
   loop_control:
     label: "{{ item.0.name }}"

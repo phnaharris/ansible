@@ -1,0 +1,86 @@
+- name: Installing shell and associated tools
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - fish
+    - tmux
+    - stow
+
+- name: Stowing dotfiles
+  ansible.builtin.shell:
+    cmd: stow --restow */
+    chdir: "{{ dotfiles }}/XDG_CONFIG_HOME"
+
+- name: Set login shell of user {{ ansible_env.USER }} to fish with `usermod`
+  shell: usermod --shell /usr/bin/fish {{ ansible_env.USER }}
+  become: true
+  changed_when: true
+
+- name: Installing rtx - dev tools, env vars, task runner
+  shell: paru -S --noconfirm rtx
+
+- name: Adding rtx plugins with latest version
+  shell: |
+    rtx plugins add {{ item }} --yes
+    rtx install {{ item }}@latest --yes
+    rtx use -g {{ item }}@latest --yes
+  loop:
+    - bun
+    - deno
+    - elixir
+    - erlang
+    - go
+    - nodejs
+
+- name: Making sure to uninstall rust package (cause conflict with rustup)
+  shell: paru -Rnsc rust --noconfirm
+
+- name: Installing other dev tools
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - checkupdates-with-aur
+    - docker
+    - gcc
+    - nodejs-commitizen
+    - rustup
+    - ngrok
+
+- name: Setting up docker
+  become: true
+  shell: |
+    sudo groupadd docker
+    sudo usermod -aG docker {{ user.stdout }}
+
+- name: Starting docker daemon
+  ansible.builtin.systemd:
+    enabled: true
+    state: started
+    name: "{{ item }}"
+  become: true
+  loop:
+    - docker
+
+- name: Pulling docker images for dev
+  become: true
+  shell: docker pull {{ item }}:latest
+  loop:
+    - postgres
+    - mongo
+    - redis
+
+- name: Installing Neovim dev tools
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - clang
+    - codelldb
+    - delve
+    - eslint_d
+    - fd
+    - gdb
+    - neovim
+    - prettierd
+    - proselint
+    - python-black
+    - ripgrep
+    - shfmt
+    - tidy
+    - vim

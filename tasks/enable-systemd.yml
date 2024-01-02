@@ -1,0 +1,30 @@
+- name: Make sure a service unit is enabled and running (as root)
+  ansible.builtin.systemd:
+    enabled: true
+    state: started
+    name: "{{ item }}"
+  become: true
+  loop:
+    - NetworkManager
+    - acpid
+    - avahi-daemon
+    - bluetooth
+    - containerd
+    - cronie
+    - cups
+    - docker
+    - firewalld
+    - fstrim.timer
+    - libvirtd
+    - ly
+    - xdg-desktop-portal-hyprland
+    - wg-quick
+
+- name: Make sure a service unit is enabled and running (as current user)
+  ansible.builtin.systemd:
+    enabled: true
+    state: started
+    name: "{{ item }}"
+  loop:
+    - pipewire
+    - pipewire-pulse
