@@ -28,4 +28,7 @@
     - include_tasks: tasks/install-util-apps.yml
     - include_tasks: tasks/install-server.yml
     - include_tasks: tasks/install-latex.yml
+      tags:
+        - latex
     - include_tasks: tasks/install-gui.yml
+    - include_tasks: tasks/enable-systemd.yml

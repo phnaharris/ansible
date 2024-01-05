@@ -23,7 +23,7 @@
     - altair
     - postman-bin
     - mongodb-compass
-    - pgadmin4
+    - pgadmin4-py
     - sqlitebrowser
     - virt-manager
     - dnsmasq
@@ -32,7 +32,7 @@
   shell: paru -S --noconfirm {{ item }}
   loop:
     - anydesk-bin
-    - brave
+    - brave-bin
     - dunst
     - firefox-developer-edition
     - gimp

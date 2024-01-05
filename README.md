@@ -1,7 +1,8 @@
 # TODO
 
-- [ ] server.
-  - [ ] coding
+- [x] server
+  - [x] coding
   - [ ] keys
-  - [ ] tools
-- [ ] gui app.
+  - [x] tools
+- [x] gui app
+- [ ] separate task by tags

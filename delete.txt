@@ -76,7 +76,7 @@ otf-font-awesome
 paru
 pass
 pass-otp
-pgadmin4
+pgadmin4-py
 pipewire
 pipewire-pulse
 postman-bin
