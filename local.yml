@@ -21,14 +21,15 @@
       shell: hostnamectl hostname
       register: hostname
 
-    - include_tasks: tasks/install-ssh.yml
-    - include_tasks: tasks/pull-repos.yml
-    - include_tasks: tasks/install-paru.yml
-    - include_tasks: tasks/install-hardware-driver.yml
-    - include_tasks: tasks/install-util-apps.yml
-    - include_tasks: tasks/install-server.yml
-    - include_tasks: tasks/install-latex.yml
+  tasks:
+    - import_tasks: tasks/install-ssh.yml
+    - import_tasks: tasks/pull-repos.yml
+    - import_tasks: tasks/install-paru.yml
+    - import_tasks: tasks/install-hardware-driver.yml
+    - import_tasks: tasks/install-util-apps.yml
+    - import_tasks: tasks/install-server.yml
+    - import_tasks: tasks/install-latex.yml
       tags:
         - latex
-    - include_tasks: tasks/install-gui.yml
-    - include_tasks: tasks/enable-systemd.yml
+    - import_tasks: tasks/install-gui.yml
+    - import_tasks: tasks/enable-systemd.yml
