@@ -19,5 +19,5 @@
   copy:
     src: "{{ item }}"
     dest: "{{ lookup('env', 'HOME') }}/.ssh/"
-    owner: "{{ user.stdout }}"
+    owner: "{{ user }}"
     mode: 0600

@@ -1,0 +1,60 @@
+- name: Installing cronie
+  become: true
+  community.general.pacman:
+    name: cronie
+    state: latest
+
+- name: Installing cronjobs.
+  become: true
+  vars:
+    crons:
+      - name: Cleanup old version of pacman packages every 2 hours
+        job: pacman -Sc --noconfirm
+        user: "root"
+        minute: "0"
+        hour: "*/2" # every 2 hours
+        day: "*"
+        month: "*"
+        weekday: "*"
+      - name: Cleanup old version of paru packages every 2 hours
+        job: paru -Sc --noconfirm
+        user: "{{ user }}"
+        minute: "0"
+        hour: "*/2" # every 2 hours
+        day: "*"
+        month: "*"
+        weekday: "*"
+      - name: Syncing books hourly
+        user: "{{ user }}"
+        job: "rclone sync /data/personal/book/ books:"
+        minute: "0"
+        hour: "*"
+        day: "*"
+        month: "*"
+        weekday: "*"
+      - name: "Syncing trading courses hourly"
+        user: "{{ user }}"
+        job: "rclone sync /data/personal/trading/ trading:"
+        minute: "0"
+        hour: "*"
+        day: "*"
+        month: "*"
+        weekday: "*"
+      - name: "Dumping packages list hourly"
+        user: "{{ user }}"
+        job: "/data/repos/pmachos/scripts/utils/pkgdump"
+        minute: "0"
+        hour: "*"
+        day: "*"
+        month: "*"
+        weekday: "*"
+  ansible.builtin.cron:
+    name: "{{ item.name }}"
+    user: "{{ item.user }}"
+    job: "{{ item.job }}"
+    minute: "{{ item.minute }}"
+    hour: "{{ item.hour }}"
+    day: "{{ item.day }}"
+    month: "{{ item.month }}"
+    weekday: "{{ item.weekday }}"
+  loop: "{{ crons }}"

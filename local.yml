@@ -5,6 +5,8 @@
     repos: "/data/repos"
     dotfiles: "/data/repos/pmachos/dotfiles"
     git_ssh: "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519_github_phnaharris"
+    user: "{{ ansible_env.USER }}"
+    hostname: "{{ ansible_hostname }}"
   pre_tasks:
     - name: Run the equivalent of "pacman -Syu"
       become: true
@@ -12,14 +14,6 @@
       community.general.pacman:
         update_cache: true
         upgrade: true
-
-  tasks:
-    - name: Finding who I am?
-      shell: whoami
-      register: user
-    - name: Finding where I am?
-      shell: hostnamectl hostname
-      register: hostname
 
   tasks:
     - import_tasks: tasks/install-ssh.yml
@@ -33,3 +27,6 @@
         - latex
     - import_tasks: tasks/install-gui.yml
     - import_tasks: tasks/enable-systemd.yml
+    - import_tasks: tasks/install-cron.yml
+      tags:
+        - cronjobs

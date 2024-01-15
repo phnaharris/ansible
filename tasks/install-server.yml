@@ -48,7 +48,7 @@
   become: true
   shell: |
     sudo groupadd docker
-    sudo usermod -aG docker {{ user.stdout }}
+    sudo usermod -aG docker {{ user }}
 
 - name: Starting docker daemon
   ansible.builtin.systemd:
@@ -73,14 +73,14 @@
     - clang
     - codelldb
     - delve
-    - eslint_d
+    # - eslint_d
     - fd
     - gdb
     - neovim
-    - prettierd
-    - proselint
-    - python-black
+    # - prettierd
+    # - proselint
+    # - python-black
     - ripgrep
-    - shfmt
+    # - shfmt
     - tidy
     - vim
