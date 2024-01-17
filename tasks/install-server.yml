@@ -8,7 +8,7 @@
 - name: Stowing dotfiles
   ansible.builtin.shell:
     cmd: stow --restow */
-    chdir: "{{ dotfiles }}/XDG_CONFIG_HOME"
+    chdir: "{{ dotfiles }}"
 
 - name: Set login shell of user {{ ansible_env.USER }} to fish with `usermod`
   shell: usermod --shell /usr/bin/fish {{ ansible_env.USER }}
