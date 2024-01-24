@@ -8,6 +8,7 @@
   shell: paru -S --noconfirm {{ item }}
   loop:
     - blueman
+    - bluez-utils
     - bolt
     - brightnessctl
     - hyprpaper

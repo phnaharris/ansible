@@ -7,6 +7,7 @@ avahi-daemon
 base
 base-devel
 blueman
+bluez-utils
 bluetooth
 bolt
 brave
