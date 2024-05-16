@@ -19,8 +19,6 @@
       - name: "phnaharris"
         repositories:
           - phnaharris.github.io
-      - name: "pmachos"
-        repositories:
           - dotfiles
           - passwords
           - scripts
