@@ -1,0 +1,150 @@
+- name: Installing openssh
+  become: true
+  community.general.pacman:
+    name: openssh
+    state: latest
+- name: Starting SSH agent
+  shell: eval `ssh-agent`
+- name: Ensuring .ssh directory exists.
+  file:
+    dest: "{{ lookup('env', 'HOME') }}/.ssh"
+    mode: 0700
+    state: directory
+- name: Installing SSH key
+  with_fileglob:
+    - "{{ lookup('pipe', 'pwd') }}/.ssh/*"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/"
+    owner: "{{ user }}"
+    mode: 0600
+- name: Clonning paru
+  git:
+    repo: https://aur.archlinux.org/paru.git
+    dest: "/tmp/paru"
+    clone: yes
+    update: yes
+- name: Installing paru
+  ansible.builtin.shell:
+    cmd: makepkg -si --needed --noconfirm
+    chdir: "/tmp/paru"
+- name: Installing CPU microcode & GPU driver
+  shell: paru -S --noconfirm intel-ucode nvidia
+- name: Installing base package
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - base
+    - base-devel
+    - linux
+    - linux-firmware
+    - linux-headers
+    - net-tools
+- name: Installing CLI utilities
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - eza
+    - fzf
+    - git
+    - htop
+    - man-db
+    - neofetch
+    - openresolv
+    - pass
+    - pass-otp
+    - tree
+    - ufw
+    - unzip
+    - wget
+    - wireguard-tools
+- name: Installing Sway window manager
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - sway
+    - xdg-desktop-portal-wlr
+- name: Installing Wayland addons
+  shell: paru -S --noconfirm {{ item }}
+  loop:
+    - anydesk-bin
+    - archlinux-keyring
+    - blueman
+    - bluez-utils
+    - bolt
+    - brave-bin
+    - brave-nightly-bin
+    - brightnessctl
+    - checkupdates-with-aur
+    - chromium
+    - dunst
+    - fcitx5
+    - fcitx5-configtool
+    - fcitx5-gtk
+    - fcitx5-qt
+    - fcitx5-unikey
+    - fd
+    - fish
+    - gcc
+    - gimp
+    - google-chrome
+    - keybase-bin
+    - mise
+    - neovim
+    - network-manager-applet
+    - networkmanager
+    - nodejs-commitizen
+    - nomacs
+    - noto-fonts
+    - qbittorrent
+    - qt5-wayland
+    - qt6-wayland
+    - ripgrep
+    - solaar
+    - stow
+    - swappy
+    - swaylock
+    - telegram-desktop
+    - thunar
+    - tidy
+    - tlp-rdw
+    - tmux
+    - ttf-noto-nerd
+    - vim
+    - vlc
+    - waybar
+    - wf-recorder
+    - wl-clipboard
+    - wlr-randr
+    - wofi
+    - xfce-polkit
+    - zathura
+    - zathura-pdf-mupdf
+- name: Set dark theme for GTK application
+  shell: |
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+- name: Make sure a service unit is enabled and running (as root)
+  ansible.builtin.systemd:
+    enabled: true
+    state: started
+    name: "{{ item }}"
+  become: true
+  loop:
+    - NetworkManager
+    - acpid
+    - avahi-daemon
+    - bluetooth
+    - cups
+    - firewalld
+    - fstrim.timer
+    - xdg-desktop-portal-wlr
+    - wg-quick
+- name: Make sure a service unit is enabled and running (as current user)
+  ansible.builtin.systemd:
+    enabled: true
+    state: started
+    name: "{{ item }}"
+  loop:
+    - pipewire
+    - pipewire-pulse
+- name: Set login shell of user {{ ansible_env.USER }} to fish with `usermod`
+  shell: usermod --shell /usr/bin/fish {{ ansible_env.USER }}
+  become: true
+  changed_when: true

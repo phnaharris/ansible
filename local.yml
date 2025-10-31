@@ -14,7 +14,6 @@
       community.general.pacman:
         update_cache: true
         upgrade: true
-
   tasks:
     - import_tasks: tasks/install-ssh.yml
     - import_tasks: tasks/pull-repos.yml
@@ -30,3 +29,6 @@
     - import_tasks: tasks/install-cron.yml
       tags:
         - cronjobs
+    - import_tasks: tasks/casual-use.yml
+      tags:
+        - casual
