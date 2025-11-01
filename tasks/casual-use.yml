@@ -18,16 +18,6 @@
     dest: "{{ lookup('env', 'HOME') }}/.ssh/"
     owner: "{{ user }}"
     mode: 0600
-- name: Clonning paru
-  git:
-    repo: https://aur.archlinux.org/paru.git
-    dest: "/tmp/paru"
-    clone: yes
-    update: yes
-- name: Installing paru
-  ansible.builtin.shell:
-    cmd: makepkg -si --needed --noconfirm
-    chdir: "/tmp/paru"
 - name: Installing CPU microcode & GPU driver
   shell: paru -S --noconfirm intel-ucode nvidia
 - name: Installing base package

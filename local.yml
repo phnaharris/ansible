@@ -16,19 +16,16 @@
         upgrade: true
   tasks:
     - import_tasks: tasks/install-ssh.yml
-    - import_tasks: tasks/pull-repos.yml
-    - import_tasks: tasks/install-paru.yml
-    - import_tasks: tasks/install-hardware-driver.yml
-    - import_tasks: tasks/install-util-apps.yml
-    - import_tasks: tasks/install-server.yml
-    - import_tasks: tasks/install-latex.yml
-      tags:
-        - latex
-    - import_tasks: tasks/install-gui.yml
-    - import_tasks: tasks/enable-systemd.yml
-    - import_tasks: tasks/install-cron.yml
-      tags:
-        - cronjobs
-    - import_tasks: tasks/casual-use.yml
-      tags:
-        - casual
+  #- import_tasks: tasks/pull-repos.yml
+  #- import_tasks: tasks/install-paru.yml
+  #- import_tasks: tasks/install-hardware-driver.yml
+  #- import_tasks: tasks/install-util-apps.yml
+  #- import_tasks: tasks/install-server.yml
+  #- import_tasks: tasks/install-latex.yml
+  #  tags:
+  #    - latex
+  #- import_tasks: tasks/install-gui.yml
+  #- import_tasks: tasks/enable-systemd.yml
+  #- import_tasks: tasks/install-cron.yml
+  #  tags:
+  #    - cronjobs
